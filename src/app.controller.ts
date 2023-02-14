@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Render } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Render,
+} from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { AppService } from './app.service';
 import Merevlemez from './merevlemez.entity';
@@ -29,5 +37,10 @@ export class AppController {
     const merevlemezRepo = this.dataSource.getRepository(Merevlemez);
     merevlemezRepo.save(merevlemez);
     return merevlemez;
+  }
+  @Delete('merevlemez/:id')
+  deleteMerevlemez(@Param('id') id: number) {
+    const merevlemezRepo = this.dataSource.getRepository(Merevlemez);
+    merevlemezRepo.delete(id);
   }
 }
