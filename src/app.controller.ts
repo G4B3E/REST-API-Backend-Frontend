@@ -16,6 +16,14 @@ export class AppController {
   index() {
     return { message: 'Welcome to the homepage' };
   }
+  @Get('merevlemez')
+  async listMerevlemez() {
+    const merevlemezRepo = this.dataSource.getRepository(Merevlemez);
+    const [adat, darab] = await merevlemezRepo
+      .createQueryBuilder()
+      .getManyAndCount();
+    return { merevlemezek: adat, count: darab };
+  }
   @Post('merevlemez')
   async newMerevlemez(@Body() merevlemez: newMerevlemezDto) {
     const merevlemezRepo = this.dataSource.getRepository(Merevlemez);
